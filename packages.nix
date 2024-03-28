@@ -7,7 +7,7 @@
         # essential
         firefox kate alacritty thunderbird
         # desktop environment
-        unstable.eww rofi-wayland mako lm_sensors upower
+        unstable.eww rofi-wayland mako lm_sensors upower custom.backlight-rs
         # other apps
         discord spotify steam unstable.obsidian
         # dev tools
