@@ -8,6 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./modules/zsh.nix
+      ./modules/firefox.nix
     ];
 
   hardware.bluetooth.enable = true;
@@ -53,6 +55,11 @@
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils-full}/bin/chmod g+w /sys/class/backlight/%k/brightness"
   '';
 
+  services.tlp.enable = true;
+  services.fstrim.enable = true;
+
+  zramSwap.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -95,9 +102,8 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.daniel = {
+  users.users.${config.username} = {
     isNormalUser = true;
-    description = "daniel";
     extraGroups = [ "networkmanager" "wheel" "video" ];
     shell = pkgs.zsh;
     useDefaultShell = true;
@@ -106,13 +112,6 @@
   programs.steam.enable = true;
   programs.vim.defaultEditor = true;
 
-  programs.zsh = {
-    enable = true;
-    syntaxHighlighting.enable = true;
-    ohMyZsh.enable = true;
-    ohMyZsh.custom = "${pkgs.custom.omz-custom}";
-    ohMyZsh.theme = "gianu-custom";
-  };
   services.upower.enable = true;
 
   # Allow unfree packages
@@ -134,18 +133,7 @@
     ];
   };
 
-  home-manager.users.daniel = { pkgs, ... }: {
-    #programs.zsh = {
-    #  enable = true;
-    #  enableCompletion = true;
-    #  enableAutosuggestions = true;
-    #  syntaxHighlighting.enable = true;
-    #  oh-my-zsh = {
-    #    enable = true;
-    #    plugins = ["git"];
-    #    theme = "gianu";
-    #  };
-    #};
+  home-manager.users.${config.username} = { ... }: {
     home.stateVersion = "23.11";
   };
 

@@ -12,6 +12,14 @@
         nixosConfigurations.nixos-xps = nixpkgs.lib.nixosSystem {
             inherit system;
             modules = [
+                ({ lib, ... }:
+                    {
+                        options = {
+                            username = lib.mkOption { type = lib.types.str; };
+                        };
+                        config.username = "daniel";
+                    }
+                )
                 ({
                     nixpkgs.overlays = [
                         (final: prev: {
