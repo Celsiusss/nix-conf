@@ -8,16 +8,17 @@
     };
     outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... }:
     let system = "x86_64-linux";
-    in {
-        nixosConfigurations.nixos-xps = nixpkgs.lib.nixosSystem {
+        mkHost = hostname: username: nixpkgs.lib.nixosSystem {
             inherit system;
             modules = [
                 ({ lib, ... }:
                     {
                         options = {
+                            hostname = lib.mkOption { type = lib.types.str; };
                             username = lib.mkOption { type = lib.types.str; };
                         };
-                        config.username = "daniel";
+                        config.hostname = hostname;
+                        config.username = username;
                     }
                 )
                 ({
@@ -30,28 +31,17 @@
                             custom = import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; };
                         })
                     ];
-                 })
-                ./configuration.nix
-                ./packages.nix
+                })
+                ./hosts/${hostname}/configuration.nix
+                ./hosts/${hostname}/packages.nix
                 home-manager.nixosModules.home-manager
                 {
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
-                    # home-manager.users.jdoe = import ./home.nix;
-
-                    # Optionally, use home-manager.extraSpecialArgs to pass
-                    # arguments to home.nix
-
-                    home-manager.users.daniel = {
-                        programs.git = {
-                            enable = true;
-                            userName = "Daniel Liland";
-                            userEmail = "celsiuss@await.sh";
-                        };
-                    };
                 }
-
             ];
         };
+    in {
+        nixosConfigurations.xps = mkHost "xps" "daniel";
     };
 }
