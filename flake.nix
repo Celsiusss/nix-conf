@@ -43,5 +43,6 @@
         };
     in {
         nixosConfigurations.xps = mkHost "xps" "daniel";
+        nixosConfigurations.desktop = mkHost "desktop" "daniel";
     };
 }
