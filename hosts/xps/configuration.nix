@@ -81,6 +81,10 @@
       userName = "Daniel Liland";
       userEmail = "celsiuss@await.sh";
     };
+    services.mako = {
+      enable = true;
+      defaultTimeout = 7000;
+    };
 
     home.stateVersion = "23.11";
   };
