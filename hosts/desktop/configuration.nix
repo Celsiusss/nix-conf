@@ -13,14 +13,6 @@
       ../../modules/firefox.nix
     ];
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils-full}/bin/chgrp video /sys/class/backlight/%k/brightness"
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils-full}/bin/chmod g+w /sys/class/backlight/%k/brightness"
-  '';
-
   services.fstrim.enable = true;
 
   zramSwap.enable = true;
@@ -46,12 +38,15 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${config.username} = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "corectrl" ];
     shell = pkgs.zsh;
     useDefaultShell = true;
   };
 
   programs.steam.enable = true;
+
+  programs.corectrl.enable = true;
+  programs.corectrl.gpuOverclock.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

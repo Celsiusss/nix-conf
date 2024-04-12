@@ -69,7 +69,9 @@
       vim git wget curl zsh jq bc gcc dig iputils traceroute htop
   ];
   users.users.${config.username}.packages = with pkgs; [
-    # essential
-    firefox kate alacritty thunderbird btop
+    # applications
+    firefox kate alacritty thunderbird
+    # tools
+    htop just
   ];
 }
