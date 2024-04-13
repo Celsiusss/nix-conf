@@ -6,7 +6,7 @@
         prismlauncher gimp
         # dev tools
         unstable.vscode.fhs nodejs_21 nil
-        nvtop-amd
+        nvtop-amd linuxKernel.packages.linux_6_1.xone
     ];
     fonts.packages = with pkgs; [
     ];

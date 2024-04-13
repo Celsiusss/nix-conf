@@ -25,6 +25,8 @@
     }
   ];
 
+  hardware.xone.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -44,6 +46,7 @@
   };
 
   programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
 
   programs.corectrl.enable = true;
   programs.corectrl.gpuOverclock.enable = true;
